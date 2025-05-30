@@ -16,7 +16,7 @@ This is a console application for tracking item prices in Albion Online marketpl
 1. Make sure you have .NET 8.0 SDK installed
 2. Clone the repository
 3. Navigate to the project directory
-4. Copy `Data/mailconfig.example.json` to `Data/mailconfig.json` and update it with your email settings:
+4. Create `Data/mailconfig.json` file with your email settings:
 
 ```json
 {

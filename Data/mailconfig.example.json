@@ -1,7 +1,0 @@
-{
-  "SmtpServer": "smtp.example.com",
-  "Port": 587,
-  "SenderEmail": "your@email.com",
-  "SenderPassword": "your_app_password",
-  "EnableSsl": true
-} 
