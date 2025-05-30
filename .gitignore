@@ -8,9 +8,6 @@ albion.db
 albion.db-shm
 albion.db-wal
 
-# Configuration files
-Data/mailconfig.json
-
 # User-specific files
 *.rsuser
 *.suo
