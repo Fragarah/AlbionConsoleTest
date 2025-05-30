@@ -374,6 +374,3 @@ FodyWeavers.xsd
 *.db
 *.db-shm
 *.db-wal
-
-# Ignore sensitive configuration files
-mailconfig.json
