@@ -30,30 +30,48 @@
         private void InitializeComponent()
         {
             listView1 = new ListView();
+            deleteButton = new Button();
             SuspendLayout();
             // 
             // listView1
             // 
             listView1.FullRowSelect = true;
             listView1.GridLines = true;
-            listView1.Location = new Point(10, 9);
+            listView1.Location = new Point(10, 10);
             listView1.Margin = new Padding(3, 2, 3, 2);
             listView1.Name = "listView1";
-            listView1.Size = new Size(526, 301);
+            listView1.Size = new Size(660, 400);
             listView1.TabIndex = 0;
             listView1.UseCompatibleStateImageBehavior = false;
             listView1.View = View.Details;
             listView1.SelectedIndexChanged += listView1_SelectedIndexChanged;
-            
-            // Dodajemy tylko dwie kolumny:
-            listView1.Columns.Add("Nazwa przedmiotu", 250);
-            listView1.Columns.Add("Lokalizacja", 200);
+
+            // Dodajemy kolumny – TO BYŁO BRAKUJĄCE
+            listView1.Columns.Add("Nazwa przedmiotu", 300);
+            listView1.Columns.Add("Miasto", 200);
+
+            // Ustawienie Anchor, żeby dobrze się skalował
+            listView1.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
+
+            // 
+            // deleteButton
+            // 
+            deleteButton.Location = new Point(10, 420);
+            deleteButton.Name = "deleteButton";
+            deleteButton.Size = new Size(200, 30);
+            deleteButton.TabIndex = 1;
+            deleteButton.Text = "Usuń zaznaczone";
+            deleteButton.UseVisualStyleBackColor = true;
+            deleteButton.Click += deleteButton_Click;
+            deleteButton.Anchor = AnchorStyles.Bottom | AnchorStyles.Left;
+
             // 
             // TrackedItemsForm
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(551, 322);
+            ClientSize = new Size(700, 480);
+            Controls.Add(deleteButton);
             Controls.Add(listView1);
             Margin = new Padding(3, 2, 3, 2);
             Name = "TrackedItemsForm";
@@ -63,5 +81,7 @@
         }
 
         #endregion
+
+        private Button deleteButton;
     }
 }

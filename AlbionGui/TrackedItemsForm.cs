@@ -47,5 +47,37 @@ namespace AlbionGui
         {
 
         }
+
+        private async void deleteButton_Click(object sender, EventArgs e)
+        {
+            if (listView1.SelectedItems.Count == 0)
+            {
+                MessageBox.Show("Zaznacz przynajmniej jeden element do usunięcia.");
+                return;
+            }
+
+            foreach (ListViewItem selected in listView1.SelectedItems)
+            {
+                string itemName = selected.SubItems[0].Text;
+                string location = selected.SubItems[1].Text;
+
+                // Pobierz wszystkie śledzone elementy z bazy
+                var trackedItems = await _databaseService.GetTrackedItemsAsync();
+
+                // Znajdź dopasowany element (uwzględniając nazwę i lokalizację)
+                var trackedItem = trackedItems.FirstOrDefault(t =>
+                    t.Item != null &&
+                    t.Item.Name == itemName &&
+                    t.Location == location);
+
+                if (trackedItem != null)
+                {
+                    await _databaseService.RemoveTrackedItemAsync(trackedItem);
+                    listView1.Items.Remove(selected);
+                }
+            }
+
+            MessageBox.Show("Usunięto zaznaczone przedmioty.");
+        }
     }
 }

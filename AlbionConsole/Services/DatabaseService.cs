@@ -83,7 +83,7 @@ public class DatabaseService
 
     public async Task SaveTrackedItemAsync(TrackedItem item)
     {
-        // Validate and normalize city name
+        // Normalizuj nazwê miasta
         var normalizedCity = City.NormalizeName(item.Location);
         if (!City.IsValid(normalizedCity))
         {
@@ -91,6 +91,17 @@ public class DatabaseService
         }
         item.Location = normalizedCity;
 
+        // SprawdŸ, czy ten przedmiot ju¿ jest œledzony w tej lokalizacji
+        bool alreadyTracked = await _dbContext.TrackedItems
+            .AnyAsync(t => t.ItemId == item.ItemId && t.Location == item.Location);
+
+        if (alreadyTracked)
+        {
+            _logger.LogInformation($"Przedmiot {item.Item?.Name} w lokalizacji {item.Location} ju¿ jest œledzony.");
+            return; // Nie dodawaj duplikatu
+        }
+
+        // Dodaj nowy wpis
         _dbContext.TrackedItems.Add(item);
         await _dbContext.SaveChangesAsync();
     }
@@ -131,5 +142,10 @@ public class DatabaseService
             .Where(p => p.ItemId == itemId)
             .OrderByDescending(p => p.Timestamp)
             .ToListAsync();
+    }
+    public async Task RemoveTrackedItemAsync(TrackedItem item)
+    {
+        _dbContext.TrackedItems.Remove(item);
+        await _dbContext.SaveChangesAsync();
     }
 } 
