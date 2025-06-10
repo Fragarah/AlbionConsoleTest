@@ -1,7 +1,7 @@
 {
-  "SmtpServer": "smtp.gmail.com",
-  "Port": 587,
-  "SenderEmail": "your@email.com",
-  "SenderPassword": "your_app_password",
-  "EnableSsl": true
+    "SmtpServer": "smtp.gmail.com",
+    "Port": 587,
+    "SenderEmail": "twoj.mail@email.com",
+    "SenderPassword": "your_password",
+    "EnableSsl": true
 } 

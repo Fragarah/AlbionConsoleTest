@@ -30,7 +30,7 @@ public class MailNotificationService
         return config ?? throw new InvalidOperationException("Failed to deserialize mailconfig.json");
     }
 
-    public async Task SendNotificationAsync(string toEmail, string subject, string body)
+    public async Task SendNotificationAsync(string toEmail, string subject, string body, string attachmentPath)
     {
         var message = new MailMessage()
         {
@@ -40,6 +40,11 @@ public class MailNotificationService
             IsBodyHtml = false
         };
         message.To.Add(new MailAddress(toEmail));
+
+        if (!File.Exists(attachmentPath))
+            throw new FileNotFoundException("Nie znaleziono pliku PDF do za³¹czenia.", attachmentPath);
+
+        message.Attachments.Add(new Attachment(attachmentPath));
 
         using var client = new SmtpClient(_emailConfig.SmtpServer, _emailConfig.Port)
         {

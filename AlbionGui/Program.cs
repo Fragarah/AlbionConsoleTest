@@ -30,6 +30,7 @@ namespace AlbionGui
                     services.AddTransient<ItemImporter>();
                     services.AddTransient<TrackedItemsForm>();
                     services.AddTransient<AlbionApiService>();
+                    services.AddTransient<MailNotificationService>();
                 })
                 .Build();
             QuestPDF.Settings.License = LicenseType.Community;

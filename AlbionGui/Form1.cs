@@ -1,3 +1,4 @@
+using System.IO;
 using System.Reflection.Metadata;
 using System.Windows.Forms;
 using AlbionConsole.Models;
@@ -12,18 +13,20 @@ namespace AlbionGui
         private readonly ItemImporter _itemImporter;
         private readonly TrackedItemsForm _trackedItemsForm;
         private readonly AlbionApiService _albionApiService;
-        
+        private readonly MailNotificationService _mailNotificationService;
+
         public Form1()
         {
             InitializeComponent();
         }
-        public Form1(DatabaseService databaseService, ItemImporter itemImporter, TrackedItemsForm trackedItemsForm, AlbionApiService albionApiService)
+        public Form1(DatabaseService databaseService, ItemImporter itemImporter, TrackedItemsForm trackedItemsForm, AlbionApiService albionApiService, MailNotificationService mailNotificationService)
         {
             InitializeComponent();
             _databaseService = databaseService;
             _itemImporter = itemImporter;
             _trackedItemsForm = trackedItemsForm;
             _albionApiService = albionApiService;
+            _mailNotificationService = mailNotificationService;
         }
         private void label1_Click(object sender, EventArgs e)
         {
@@ -198,6 +201,13 @@ namespace AlbionGui
             report.GeneratePdf(fullPath);
 
             MessageBox.Show("Raport zapisano na pulpicie.");
+
+            await _mailNotificationService.SendNotificationAsync(
+                toEmail: "adi.stanisz@gmail.com",
+                subject:$"Raport z dnia {timestamp}",
+                body: "Oto raport srednich cen z ostatnich 30 dni",
+                attachmentPath: fullPath
+                );
 
         }
     }

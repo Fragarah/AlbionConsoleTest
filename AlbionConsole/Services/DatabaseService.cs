@@ -25,6 +25,11 @@ public class DatabaseService
         _dbContext.Database.EnsureCreated();
         NormalizeCityNames().Wait();
     }
+    public DatabaseService(ILogger<DatabaseService> logger, ApplicationDbContext dbContext)
+    {
+        _logger = logger;
+        _dbContext = dbContext;
+    }
 
     private async Task NormalizeCityNames()
     {
