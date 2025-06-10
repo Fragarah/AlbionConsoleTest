@@ -1,6 +1,8 @@
+using System.Reflection.Metadata;
 using System.Windows.Forms;
 using AlbionConsole.Models;
 using AlbionConsole.Services;
+using QuestPDF.Fluent;
 
 namespace AlbionGui
 {
@@ -9,16 +11,19 @@ namespace AlbionGui
         private readonly DatabaseService _databaseService;
         private readonly ItemImporter _itemImporter;
         private readonly TrackedItemsForm _trackedItemsForm;
+        private readonly AlbionApiService _albionApiService;
+        
         public Form1()
         {
             InitializeComponent();
         }
-        public Form1(DatabaseService databaseService, ItemImporter itemImporter, TrackedItemsForm trackedItemsForm)
+        public Form1(DatabaseService databaseService, ItemImporter itemImporter, TrackedItemsForm trackedItemsForm, AlbionApiService albionApiService)
         {
             InitializeComponent();
             _databaseService = databaseService;
             _itemImporter = itemImporter;
             _trackedItemsForm = trackedItemsForm;
+            _albionApiService = albionApiService;
         }
         private void label1_Click(object sender, EventArgs e)
         {
@@ -95,7 +100,8 @@ namespace AlbionGui
 
         private void searchingButton_Click(object sender, EventArgs e)
         {
-            try {
+            try
+            {
                 _trackedItemsForm.Show();
             }
             catch (Exception ex)
@@ -138,7 +144,7 @@ namespace AlbionGui
 
         private void checkedListBox2_SelectedIndexChanged(object sender, EventArgs e)
         {
-            
+
 
         }
 
@@ -171,6 +177,28 @@ namespace AlbionGui
             {
                 citiesList.Items.Add(city);
             }
+        }
+
+        private async void updateButton_Click(object sender, EventArgs e)
+        {
+            await _albionApiService.UpdatePricesForTrackedItemsAsync();
+            MessageBox.Show("Ceny zosta³y zaktualizowane dla wszystkich œledzonych przedmiotów.");
+            var data = await _databaseService.GetLast30DaysPriceHistoryGroupedByItemAsync();
+            var report = new PriceHistoryReport(data);
+
+            var timestamp = DateTime.Now.ToString("yyyyMMdd_HHmmss");
+            var fileName = $"RaportCen_{timestamp}.pdf";
+            var folderPath = Path.Combine(
+                    Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments),
+                      "AlbionRaporty");
+
+            Directory.CreateDirectory(folderPath); // utwórz folder, jeœli nie istnieje
+            // Zapisz na pulpit
+            var fullPath = Path.Combine(folderPath, fileName);
+            report.GeneratePdf(fullPath);
+
+            MessageBox.Show("Raport zapisano na pulpicie.");
+
         }
     }
 }

@@ -38,6 +38,7 @@
             citiesList = new CheckedListBox();
             label3 = new Label();
             importButton = new Button();
+            updateButton = new Button();
             SuspendLayout();
             // 
             // textBox1
@@ -134,11 +135,22 @@
             importButton.UseVisualStyleBackColor = true;
             importButton.Click += importButton_Click;
             // 
+            // updateButton
+            // 
+            updateButton.Location = new Point(11, 391);
+            updateButton.Name = "updateButton";
+            updateButton.Size = new Size(203, 23);
+            updateButton.TabIndex = 10;
+            updateButton.Text = "Aktualizuj ceny";
+            updateButton.UseVisualStyleBackColor = true;
+            updateButton.Click += updateButton_Click;
+            // 
             // Form1
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(800, 450);
+            Controls.Add(updateButton);
             Controls.Add(importButton);
             Controls.Add(label3);
             Controls.Add(citiesList);
@@ -168,5 +180,6 @@
         private CheckedListBox citiesList;
         private Label label3;
         private Button importButton;
+        private Button updateButton;
     }
 }

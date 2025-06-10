@@ -4,6 +4,7 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.EntityFrameworkCore;
 using AlbionConsole.Data;
 using AlbionConsole.Services;
+using QuestPDF.Infrastructure;
 
 namespace AlbionGui
 {
@@ -28,8 +29,10 @@ namespace AlbionGui
                     services.AddTransient<Form1>(); // dodajemy nasz formularz
                     services.AddTransient<ItemImporter>();
                     services.AddTransient<TrackedItemsForm>();
+                    services.AddTransient<AlbionApiService>();
                 })
                 .Build();
+            QuestPDF.Settings.License = LicenseType.Community;
 
             ApplicationConfiguration.Initialize();
 

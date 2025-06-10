@@ -148,4 +148,22 @@ public class DatabaseService
         _dbContext.TrackedItems.Remove(item);
         await _dbContext.SaveChangesAsync();
     }
+    public async Task<Dictionary<Item, List<PriceHistory>>> GetLast30DaysPriceHistoryGroupedByItemAsync()
+    {
+        var sinceDate = DateTime.UtcNow.Date.AddDays(-30);
+
+        var records = await _dbContext.PriceHistories
+            .Include(p => p.Item)
+            .Where(p => p.Timestamp >= sinceDate)
+            .OrderByDescending(p => p.Timestamp)
+            .ToListAsync();
+
+        return records
+            .Where(p => p.Item != null)
+            .GroupBy(p => p.Item!)
+            .ToDictionary(g => g.Key, g => g
+                .OrderByDescending(p => p.Timestamp)
+                .Take(30)
+                .ToList());
+    }
 } 

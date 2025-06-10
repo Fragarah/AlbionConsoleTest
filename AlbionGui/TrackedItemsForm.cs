@@ -79,5 +79,10 @@ namespace AlbionGui
 
             MessageBox.Show("Usunięto zaznaczone przedmioty.");
         }
+        protected override void OnFormClosing(FormClosingEventArgs e)
+        {
+            e.Cancel = true; // nie zamykaj
+            this.Hide();     // tylko ukryj
+        }
     }
 }
