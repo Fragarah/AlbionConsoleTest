@@ -200,7 +200,7 @@ namespace AlbionGui
             var fullPath = Path.Combine(folderPath, fileName);
             report.GeneratePdf(fullPath);
 
-            MessageBox.Show("Raport zapisano na pulpicie.");
+            MessageBox.Show("Raport zapisano w folderze AlbionRaporty.");
 
             await _mailNotificationService.SendNotificationAsync(
                 toEmail: "adi.stanisz@gmail.com",
