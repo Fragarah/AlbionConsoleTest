@@ -29,6 +29,13 @@ public class ItemImporter
         _httpClient.DefaultRequestHeaders.Accept.Add(new System.Net.Http.Headers.MediaTypeWithQualityHeaderValue("application/json"));
         _httpClient.Timeout = TimeSpan.FromSeconds(30);
     }
+    public ItemImporter(ApplicationDbContext context, ILogger<ItemImporter> logger, HttpClient httpClient)
+    {
+        _context = context;
+        _logger = logger;
+        _httpClient = httpClient;
+    }
+
 
     public async Task ImportAsync()
     {
