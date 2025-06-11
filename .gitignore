@@ -4,9 +4,6 @@
 ## Get latest from https://github.com/github/gitignore/blob/master/VisualStudio.gitignore
 
 # Database files
-albion.db
-albion.db-shm
-albion.db-wal
 
 # User-specific files
 *.rsuser
