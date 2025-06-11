@@ -365,6 +365,3 @@ MigrationBackup/
 FodyWeavers.xsd
 
 # Ignore SQLite database files
-*.db
-*.db-shm
-*.db-wal
